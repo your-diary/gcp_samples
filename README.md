@@ -87,6 +87,41 @@ This project creates a REST API which receives a JSON of the form `{"content": <
 
 - [*GoogleCloudPlatform / golang-samples*](https://github.com/GoogleCloudPlatform/golang-samples)
 
+# 4. `./cloud_run/` project
+
+## 4.1 About
+
+This project deploys a very simple Docker container to Cloud Run.
+
+## 4.2 Architecture
+
+![](./readme_assets/002.png)
+
+## 4.3 Usage
+
+1. Interactively build and deploy `Dockerfile`. Allow unauthenticated invocations to issue a public URL.
+    ```bash
+    $ gcloud run deploy
+    ```
+
+    ```
+    Allow unauthenticated invocations to [cloudrun] (y/N)?  y
+    ```
+
+2. Check the public URL of the deployment.
+    ```bash
+    $ gcloud run services list
+    ```
+
+3. Call the API.
+    ```bash
+    $ curl <URL>
+    ```
+
+    ```
+    Working.
+    ```
+
 
 
 
