@@ -122,8 +122,104 @@ This project deploys a very simple Docker container to Cloud Run.
     Working.
     ```
 
+# 5. `./compute_engine/` project
 
+## 5.1 About
 
+This project creates a REST API which receives a JSON of the form `{"content": <string>}` and uploads its `content` as `<timestamp>.txt` to Cloud Storage. A signed URL (i.e. a public URL with expiration date) to access the object uploaded in Cloud Storage is returned. In addition, every request is logged to SQL (PostgresSQL) and Firestore.
+
+## 5.2 Architecture
+
+![](./readme_assets/003.png)
+
+## 5.3 Usage
+
+1. Access [*Firestore console*](https://console.cloud.google.com/firestore/databases/-default-/data/panel).
+
+    1. If this is the very first time you visit the console, you may be requested to select `Native` mode or `Datastore` mode. Select `Native`.
+
+    2. TODO
+
+2. Access [*SQL console*](https://console.cloud.google.com/sql/instances?project=ynn-project).
+
+    1. Select `CREATE INSTANCE`.
+
+    2. Choose `PostgresSQL`.
+
+    3. Create an instance named `test-sql-001`.
+
+    4. Select `Connections` in the sidebar.
+
+    5. Select `ADD NETWORK` to add a network and specify your IP address.
+
+3. Create a database in the SQL instance.
+
+    1. Connect.
+        ```bash
+        $ PGPASSWORD=<password> psql -h <URL> -p <port> -U postgres
+        ```
+
+    2. Create a database named `test`.
+        ```
+        CREATE DATABASE test;
+        ```
+
+    3. Check the result by listing all the databases.
+        ```
+        \list
+        ```
+
+4. Access [*Compute Engine console*](https://console.cloud.google.com/compute/instances).
+
+    1. Select `CREATE INSTANCE` to create an instance named `instance-2`.
+
+    2. Create a SSH key.
+        ```bash
+        $ gcloud compute ssh instance-2
+        ```
+
+    3. Connect to the instance via SSH.
+        ```bash
+        $ ssh gcp
+        ```
+
+    4. Install some packages.
+        ```bash
+        $ sudo apt update
+        $ sudo apt install rsync
+        ```
+
+    5. Install Go by following [the official instructions](https://go.dev/doc/install).
+        ```bash
+        $ curl -L -O 'https://go.dev/dl/go1.20.2.linux-amd64.tar.gz'
+        $ sudo tar -C /usr/local -xzf go1.20.2.linux-amd64.tar.gz
+        $ echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.profile
+        ```
+
+5. Access [*VPC network console*](https://console.cloud.google.com/networking/networks/list).
+
+    1. Select `Firewall` in the sidebar.
+
+    2. Select `CREATE FIREWALL RULE` to create a rule which opens `8080` port.
+
+6. TODO: send files (rsync -auv )
+
+7. TODO: run (ssh gcp && cd compute_engine && go build main && screen -dl ./main)
+
+8. Call the API.
+    ```bash
+    $ curl <URL>:8080 -d '{"content": "hello"}'
+    ```
+
+    ```json
+    {
+        "status": "success",
+        "url": "https://..."
+    }
+    ```
+
+    ```bash
+    $ curl <returned URL>
+    ```
 
 <!-- vim: set spell: -->
-
