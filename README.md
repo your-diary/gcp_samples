@@ -41,11 +41,31 @@ This project creates a REST API which receives a JSON of the form `{"content": <
     $ gcloud functions deploy function-1 --source . --gen2 --region us-central1
     ```
 
-5. Call the API.
+5. Privately test the API. (At this time, the API is not public so we need `Authorization` header.)
 
     ```bash
     $ curl <URL> \
         -H "Authorization: bearer $(gcloud auth print-identity-token)" \
+        -H "Content-Type: application/json" \
+        -d '{"content": "hello"}'
+    ```
+
+    ```json
+    {
+        "status": "success",
+        "url": "https://..."
+    }
+    ```
+
+    ```bash
+    $ curl <returned URL>
+    ```
+
+6. Access [*API Gateway console*](https://console.cloud.google.com/api-gateway/api) and select `CREATE GATEWAY` to create a gateway. For API Spec, upload `./cloud_functions/openapi.yaml`.
+
+7. Now the API is public via API Gateway URL. Call the API.
+    ```bash
+    $ curl <URL> \
         -H "Content-Type: application/json" \
         -d '{"content": "hello"}'
     ```
@@ -66,8 +86,6 @@ This project creates a REST API which receives a JSON of the form `{"content": <
 - [*GoogleCloudPlatform / functions-framework-go*](https://github.com/GoogleCloudPlatform/functions-framework-go)
 
 - [*GoogleCloudPlatform / golang-samples*](https://github.com/GoogleCloudPlatform/golang-samples)
-
-
 
 
 
