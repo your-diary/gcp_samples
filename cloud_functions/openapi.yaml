@@ -1,0 +1,62 @@
+swagger: "2.0"
+info:
+    title: "uploadCloudStorage"
+    description: "creates and uploads a text file to Cloud Storage"
+    version: "1.0"
+paths:
+    /:
+        post:
+            summary: "creates and uploads a text file to Cloud Storage"
+            description: ""
+            operationId: "uploadCloudStorage"
+            x-google-backend:
+                address: "<URL to your function here>"
+            consumes:
+                - application/json
+            parameters:
+                - in: body
+                  name: ""
+                  schema:
+                      type: object
+                      required:
+                          - content
+                      properties:
+                          content:
+                              type: string
+                              description: "the content of a text file uploaded to Cloud Storage"
+                              example: "Hello, world!"
+            responses:
+                "200":
+                    description: OK
+                    schema:
+                        type: object
+                        properties:
+                            status:
+                                type: string
+                                example: "success"
+                            content:
+                                type: string
+                                description: a signed URL (i.e. public, read-only, with expiration date) to access the uploaded text file
+                                example: "https://..."
+                "400":
+                    description: Bad Request
+                    schema:
+                        type: object
+                        properties:
+                            status:
+                                type: string
+                                example: "error"
+                            content:
+                                type: string
+                                example: "<reason>"
+                "500":
+                    description: Internal Server Error
+                    schema:
+                        type: object
+                        properties:
+                            status:
+                                type: string
+                                example: "error"
+                            content:
+                                type: string
+                                example: "<reason>"
