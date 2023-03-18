@@ -171,7 +171,7 @@ This project creates a REST API which receives a JSON of the form `{"content": <
 
 4. Access [*Compute Engine console*](https://console.cloud.google.com/compute/instances).
 
-    1. Select `CREATE INSTANCE` to create an instance named `instance-2`.
+    1. Select `CREATE INSTANCE` to create an instance named `instance-2`. Select `Allow full access to all Cloud APIs` for `Access scopes`. (To edit the value of `Access scopes` after creating the instance, first it shall be stopped.)
 
     2. Create a SSH key.
         ```bash
@@ -186,7 +186,7 @@ This project creates a REST API which receives a JSON of the form `{"content": <
     4. Install some packages.
         ```bash
         $ sudo apt update
-        $ sudo apt install rsync
+        $ sudo apt install rsync screen
         ```
 
     5. Install Go by following [the official instructions](https://go.dev/doc/install).
@@ -202,9 +202,29 @@ This project creates a REST API which receives a JSON of the form `{"content": <
 
     2. Select `CREATE FIREWALL RULE` to create a rule which opens `8080` port.
 
-6. TODO: send files (rsync -auv )
+6. Send this project to the instance.
+    ```bash
+    $ rsync -auv ./compute_engine gcp:./
+    ```
 
-7. TODO: run (ssh gcp && cd compute_engine && go build main && screen -dl ./main)
+7. Run the server.
+
+    1. Connect to the instance.
+        ```bash
+        $ ssh gcp
+        ```
+
+    2. Build.
+        ```bash
+        $ cd compute_engine/
+        $ go build main.go
+        ```
+
+    2. Run the server.
+        ```bash
+        $ screen -d -m ./main
+        $ screen -ls
+        ```
 
 8. Call the API.
     ```bash
