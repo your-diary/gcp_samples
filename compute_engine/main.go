@@ -11,6 +11,7 @@ import (
 	"compute_engine/cloud_sql"
 	"compute_engine/cloud_storage"
 	"compute_engine/config"
+	"compute_engine/firestore"
 )
 
 type Request struct {
@@ -94,12 +95,23 @@ func handler(w http.ResponseWriter, r *http.Request, config *config.Config) {
 	}
 	fmt.Printf("url: %v\n", url)
 
-	db1, err := cloud_sql.New(config.Postgres)
+	dbSQL, err := cloud_sql.New(config.Postgres)
 	if err != nil {
 		writeErrorResponse(w, 500, err.Error())
 		return
 	}
-	err = db1.Insert(content)
+	err = dbSQL.Insert(content)
+	if err != nil {
+		writeErrorResponse(w, 500, err.Error())
+		return
+	}
+
+	dbFirestore, err := firestore.New(config.Firestore)
+	if err != nil {
+		writeErrorResponse(w, 500, err.Error())
+		return
+	}
+	err = dbFirestore.Insert(content)
 	if err != nil {
 		writeErrorResponse(w, 500, err.Error())
 		return

@@ -9,11 +9,17 @@ import (
 type Config struct {
 	Port         int                `json:"port"`
 	CloudStorage CloudStorageConfig `json:"cloud_storage"`
+	Firestore    FirestoreConfig    `json:"firestore"`
 	Postgres     PostgresConfig     `json:"postgres"`
 }
 
 type CloudStorageConfig struct {
 	BucketName string `json:"bucket_name"`
+}
+
+type FirestoreConfig struct {
+	ProjectID      string `json:"project_id"`
+	CollectionName string `json:"collection_name"`
 }
 
 type PostgresConfig struct {

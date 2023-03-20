@@ -138,9 +138,9 @@ This project creates a REST API which receives a JSON of the form `{"content": <
 
     1. If this is the very first time you visit the console, you may be requested to select `Native` mode or `Datastore` mode. Select `Native`.
 
-    2. TODO
+    2. You don't have to manually create any collection as it will be automatically created when accessed.
 
-2. Access [*SQL console*](https://console.cloud.google.com/sql/instances?project=ynn-project).
+2. Access [*SQL console*](https://console.cloud.google.com/sql/instances).
 
     1. Select `CREATE INSTANCE`.
 
@@ -241,5 +241,9 @@ This project creates a REST API which receives a JSON of the form `{"content": <
     ```bash
     $ curl <returned URL>
     ```
+
+## 5.4 References
+
+- [*GoogleCloudPlatform / golang-samples*](https://github.com/GoogleCloudPlatform/golang-samples)
 
 <!-- vim: set spell: -->

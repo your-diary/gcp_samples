@@ -31,7 +31,7 @@ func UploadFile(config config.CloudStorageConfig, filename, content string) (str
 		return "", fmt.Errorf("failed to close a writer: %v", err)
 	}
 
-    //TODO
+	//TODO
 	// 	opts := storage.SignedURLOptions{
 	// 		Method:  "GET",
 	// 		Expires: time.Now().Add(time.Second * 30),
