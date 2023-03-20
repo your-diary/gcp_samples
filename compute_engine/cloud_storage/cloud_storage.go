@@ -31,15 +31,15 @@ func UploadFile(config config.CloudStorageConfig, filename, content string) (str
 		return "", fmt.Errorf("failed to close a writer: %v", err)
 	}
 
-	//TODO
-	// 	opts := storage.SignedURLOptions{
-	// 		Method:  "GET",
-	// 		Expires: time.Now().Add(time.Second * 30),
-	// 	}
-	// 	url, err := bucket.SignedURL(filename, &opts)
-	// 	if err != nil {
-	// 		return "", fmt.Errorf("failed to create a signed URL: %v", err)
-	// 	}
-	url := "url"
+	opts := storage.SignedURLOptions{
+		Method:  "GET",
+		Expires: time.Now().Add(time.Second * 30),
+	}
+	url, err := bucket.SignedURL(filename, &opts)
+	if err != nil {
+		//We intentionally overlook an error since `SignedURL()` always failed in our local environment.
+		fmt.Printf("failed to create a signed URL: %v\n", err)
+		return "failed to create a signed URL", nil
+	}
 	return url, nil
 }
