@@ -138,7 +138,7 @@ This project creates a REST API which receives a JSON of the form `{"content": <
 
     1. If this is the very first time you visit the console, you may be requested to select `Native` mode or `Datastore` mode. Select `Native`.
 
-    2. You don't have to manually create any collection as it will be automatically created when accessed.
+    2. You don't have to manually create any collection as it will be automatically created when accessed via SDK.
 
 2. Access [*SQL console*](https://console.cloud.google.com/sql/instances).
 
@@ -167,6 +167,11 @@ This project creates a REST API which receives a JSON of the form `{"content": <
     3. Check the result by listing all the databases.
         ```
         \list
+        ```
+
+    4. Optionally change the password.
+        ```
+        ALTER USER postgres PASSWORD '<new password>';
         ```
 
 4. Access [*Compute Engine console*](https://console.cloud.google.com/compute/instances).
