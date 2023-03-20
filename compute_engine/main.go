@@ -35,8 +35,8 @@ func main() {
 
 	server := &http.Server{
 		Addr:         fmt.Sprintf(":%v", config.Port),
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 1 * time.Second,
+		ReadTimeout:  15 * time.Second,
+		WriteTimeout: 15 * time.Second,
 	}
 
 	http.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
@@ -87,8 +87,18 @@ func handler(w http.ResponseWriter, r *http.Request, config *config.Config) {
 	content :=
 		req.Content
 
+	cloudStorage, err := cloud_storage.New(config.CloudStorage)
+	if err != nil {
+		writeErrorResponse(w, 500, err.Error())
+		return
+	}
 	filename := fmt.Sprintf("%v.txt", time.Now().UnixMicro())
-	url, err := cloud_storage.UploadFile(config.CloudStorage, filename, content)
+	err = cloudStorage.UploadFile(filename, content)
+	if err != nil {
+		writeErrorResponse(w, 500, err.Error())
+		return
+	}
+	url, err := cloudStorage.CreateSignedURL(filename)
 	if err != nil {
 		writeErrorResponse(w, 500, err.Error())
 		return

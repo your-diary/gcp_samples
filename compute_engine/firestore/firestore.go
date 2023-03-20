@@ -28,7 +28,8 @@ func New(config config.FirestoreConfig) (*Firestore, error) {
 }
 
 func (fs *Firestore) Insert(content string) error {
-	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*30)
+	defer cancel()
 	_, _, err := fs.client.Collection(fs.collectionName).Add(ctx, map[string]interface{}{
 		"timestamp": time.Now(),
 		"content":   content,
@@ -37,7 +38,8 @@ func (fs *Firestore) Insert(content string) error {
 }
 
 func (fs *Firestore) selectByContent(content string) ([][]any, error) {
-	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*30)
+	defer cancel()
 	iter := fs.client.Collection(fs.collectionName).Where("content", "==", content).Documents(ctx)
 	var ret [][]any
 	for {

@@ -150,7 +150,7 @@ This project creates a REST API which receives a JSON of the form `{"content": <
 
     4. Select `Connections` in the sidebar.
 
-    5. Select `ADD NETWORK` to add a network and specify your IP address.
+    5. Select `ADD NETWORK` to add a network and specify your IP address plus assign `Private IP`.
 
 3. Create a database in the SQL instance.
 
@@ -225,7 +225,12 @@ This project creates a REST API which receives a JSON of the form `{"content": <
         $ go build main.go
         ```
 
-    2. Run the server.
+    3. Write a config file (see below for the details).
+        ```bash
+        $ vi config.json
+        ```
+
+    4. Run the server.
         ```bash
         $ screen -d -m ./main
         $ screen -ls
@@ -247,7 +252,34 @@ This project creates a REST API which receives a JSON of the form `{"content": <
     $ curl <returned URL>
     ```
 
-## 5.4 References
+## 5.4 Configurations
+
+Configurations are read from `config.json`.
+
+Example:
+
+```json
+{
+    "port": 8080,
+    "cloud_storage": {
+        "bucket_name": "test-bucket-001-a"
+    },
+    "firestore": {
+        "project_id": "my-project-xyz",
+        "collection_name": "test_collection_001"
+    },
+    "postgres": {
+        "user": "postgres",
+        "password": "password",
+        "host": "10.xxx.xx.xxx",
+        "port": 5432,
+        "database_name": "test",
+        "table_name": "test_table"
+    }
+}
+```
+
+## 5.5 References
 
 - [*GoogleCloudPlatform / golang-samples*](https://github.com/GoogleCloudPlatform/golang-samples)
 
