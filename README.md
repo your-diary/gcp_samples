@@ -1,6 +1,10 @@
 # 1. About
 
+Sample Go projects to access GCP via SDK.
+
 # 2. Prerequisites
+
+Nothing.
 
 # 3. `./cloud_functions/` project
 
