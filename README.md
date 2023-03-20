@@ -156,7 +156,7 @@ This project creates a REST API which receives a JSON of the form `{"content": <
 
     1. Connect.
         ```bash
-        $ PGPASSWORD=<password> psql -h <URL> -p <port> -U postgres
+        $ PGPASSWORD=<password> psql -h <URL> -p 5432 -U postgres
         ```
 
     2. Create a database named `test`.

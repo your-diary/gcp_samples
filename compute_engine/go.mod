@@ -2,7 +2,10 @@ module compute_engine
 
 go 1.20
 
-require cloud.google.com/go/storage v1.30.0
+require (
+	cloud.google.com/go/storage v1.30.0
+	github.com/lib/pq v1.10.7
+)
 
 require (
 	cloud.google.com/go v0.110.0 // indirect
